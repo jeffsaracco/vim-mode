@@ -173,6 +173,18 @@ describe "Operators", ->
         expect(editor.getText()).toBe 'four'
         expect(editor.getCursorScreenPosition()).toEqual [0, 0]
 
+    describe "when followed by an iw", ->
+      it "deletes the current word until the end of the line", ->
+        editor.setText("abcd efg\nabc")
+        editor.setCursorScreenPosition([0, 6])
+
+        keydown('d')
+        keydown('i')
+        keydown('w')
+
+        expect(editor.getText()).toBe "abcd \nabc"
+        expect(editor.getCursorScreenPosition()).toEqual [0, 4]
+
   describe "the D keybinding", ->
     beforeEach ->
       editor.getBuffer().setText("012\n")
